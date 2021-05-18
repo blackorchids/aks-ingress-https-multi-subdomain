@@ -1,0 +1,35 @@
+# sample httpd-ingress yaml file
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: httpd-deployment-aspnetapp01
+  labels:
+    app: httpd-aspnetapp01
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: httpd-aspnetapp01
+  template:
+    metadata:
+      labels:
+        app: httpd-aspnetapp01
+    spec:
+      containers:
+      - name: httpd-aspnetapp01
+        image: httpd
+        ports:
+        - containerPort: 80
+---
+
+apiVersion: v1
+kind: Service
+metadata:
+  name: httpd-svc-aspnetapp01
+spec:
+  selector:
+    app: httpd-aspnetapp01
+  ports:
+  - protocol: TCP
+    port: 80
+    targetPort: 80

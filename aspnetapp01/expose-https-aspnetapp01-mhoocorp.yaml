@@ -1,0 +1,19 @@
+apiVersion: extensions/v1beta1
+kind: Ingress
+metadata:
+  name: httpdssl-http-aspnetapp01
+  annotations:
+    kubernetes.io/ingress.class: azure/application-gateway
+    appgw.ingress.kubernetes.io/ssl-redirect: "true"
+spec:
+  tls:
+    - hosts:
+      - "aspnetapp01.mhoocorp.com"
+      secretName: cert-aspnetapp01
+  rules:
+  - host: "aspnetapp01.mhoocorp.com"
+    http:
+      paths:
+      - backend:
+          serviceName: httpd-svc-aspnetapp01
+          servicePort: 80
